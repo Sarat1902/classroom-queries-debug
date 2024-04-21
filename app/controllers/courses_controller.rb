@@ -1,7 +1,6 @@
 class CoursesController < ApplicationController
   def index
     @courses = Course.all.order({ :created_at => :desc })
-
     render({ :template => "courses/index" })
   end
 
@@ -14,8 +13,8 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new
-    @course.title = params.fetch("query_title")
-    @course.term_offered = params.fetch("query_term_")
+    @course.title = params.fetch("q_title")
+    @course.term_offered = params.fetch("query_term")
     @course.department_id = params.fetch("query_department_id")
 
     if @course.valid?
@@ -43,7 +42,7 @@ class CoursesController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path")
+    the_id = params.fetch("path_id")
     @course = Course.where({ :id => the_id }).at(0)
 
     @course.destroy
